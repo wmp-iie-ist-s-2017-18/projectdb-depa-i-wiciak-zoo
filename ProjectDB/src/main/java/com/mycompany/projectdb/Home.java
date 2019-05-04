@@ -9,12 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -35,7 +30,6 @@ public class Home extends javax.swing.JFrame {
     String url = "jdbc:postgresql://localhost:5432/zoo";
     String user = "testuser";
     String password = "password";
-    int q = 5;
 
     public Home() {
         initComponents();
@@ -47,6 +41,7 @@ public class Home extends javax.swing.JFrame {
         btn_looking.setVisible(false);
         jPanel3.setVisible(false);
         jButton1.setVisible(false);
+        btn_rst2.setVisible(false);
     }
 
     /**
@@ -86,6 +81,7 @@ public class Home extends javax.swing.JFrame {
         txt_find = new javax.swing.JTextField();
         btn_looking = new javax.swing.JButton();
         btn_hide = new javax.swing.JButton();
+        btn_rst2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -323,7 +319,7 @@ public class Home extends javax.swing.JFrame {
 
             },
             new String [] {
-                "id", "name", "species_name", "age", "cage_number", "required_cage_size"
+                "id", "name", "species_name", "age", "cage_number", "cage_size"
             }
         ) {
             Class[] types = new Class [] {
@@ -411,6 +407,13 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        btn_rst2.setText("Clear");
+        btn_rst2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btn_rst2MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -425,12 +428,14 @@ public class Home extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(txt_find, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_rst2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btn_hide)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(btn_looking))
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 41, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -443,7 +448,8 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(lbl_find)
                     .addComponent(txt_find, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_looking)
-                    .addComponent(btn_hide))
+                    .addComponent(btn_hide)
+                    .addComponent(btn_rst2))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
         );
@@ -452,9 +458,7 @@ public class Home extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -513,6 +517,7 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         lbl_find.setVisible(true);
         txt_find.setVisible(true);
+        btn_rst2.setVisible(true);
         btn_hide.setVisible(true);
     }//GEN-LAST:event_btn_lookingMousePressed
 
@@ -520,6 +525,7 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         lbl_find.setVisible(false);
         txt_find.setVisible(false);
+        btn_rst2.setVisible(false);
         btn_hide.setVisible(false);
     }//GEN-LAST:event_btn_hideMousePressed
 
@@ -568,7 +574,7 @@ public class Home extends javax.swing.JFrame {
             Class.forName(connector);
             Connection con = DriverManager.getConnection(url, user, password);
             String find = txt_find.getText();
-            String query = "select id, name, species_name, age, cage_nr, required_cage_size from animals inner join species using (id_species) where species_name = '" + find + "'";
+            String query = "select id, name, species_name, age, cage_nr, cage_size from animals inner join species using (id_species) where species_name = '" + find + "'";
             PreparedStatement pst = con.prepareStatement(query); 
             ResultSet rs = pst.executeQuery();
                         
@@ -586,12 +592,17 @@ public class Home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txt_findKeyReleased
 
+    private void btn_rst2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_rst2MousePressed
+        // TODO add your handling code here:
+        txt_find.setText("");
+    }//GEN-LAST:event_btn_rst2MousePressed
+
     private void loadData() {
         try {
             Class.forName(connector);
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select id, name, species_name, age, cage_nr, required_cage_size from animals inner join species using (id_species);");
+            ResultSet rs = st.executeQuery("select id, name, species_name, age, cage_nr, cage_size from animals inner join species using (id_species);");
             {
 
                 while (jTable1.getRowCount() > 0) {
@@ -621,20 +632,18 @@ public class Home extends javax.swing.JFrame {
         String name = txt_1.getText();
         int age = Integer.parseInt(txt_2.getText());
         int cage_nr = Integer.parseInt(txt_3.getText());
-        String required_cage_size = txt_4.getText();
+        String cage_size = txt_4.getText();
 
         try {
             Class.forName(connector);
             try (
                     Connection con = DriverManager.getConnection(url, user, password);
-                    PreparedStatement pstmt = con.prepareStatement("insert into animals values(?,?,?,?,?,?)")) {
-                q++;
-                pstmt.setInt(1, q);
-                pstmt.setString(2, name);
-                pstmt.setInt(3, 1);
-                pstmt.setInt(4, age);
-                pstmt.setInt(5, cage_nr);
-                pstmt.setString(6, required_cage_size);
+                    PreparedStatement pstmt = con.prepareStatement("insert into animals values(nextval('id_seq'),?,?,?,?,?)")) {
+                pstmt.setString(1, name);
+                pstmt.setInt(2, 1);
+                pstmt.setInt(3, age);
+                pstmt.setInt(4, cage_nr);
+                pstmt.setString(5, cage_size);
 
                 int i = pstmt.executeUpdate();
 
@@ -654,8 +663,8 @@ public class Home extends javax.swing.JFrame {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-//do poprawek
-    private void alterId() {
+
+ private void alterId() {
         try {
             Class.forName(connector);
             Connection con = DriverManager.getConnection(url, user, password);
@@ -666,11 +675,12 @@ public class Home extends javax.swing.JFrame {
                 int id;
                 if (rs.last()) {
                     id = rs.getInt("id");
-                    pstmt = con.prepareStatement("alter table animals auto_increment=" + id);
+                    id++;
+                    pstmt = con.prepareStatement("alter sequence id_seq restart with " + id);
                     pstmt.executeUpdate();
                     pstmt.close();
                 } else {
-                    pstmt = con.prepareStatement("alter table animals auto_increment=1");
+                    pstmt = con.prepareStatement("alter sequence id_seq restart with 1");
                     pstmt.executeUpdate();
                     pstmt.close();
                 }
@@ -693,7 +703,7 @@ public class Home extends javax.swing.JFrame {
             String query = "delete from animals where id = " + value;
             PreparedStatement pst = con.prepareStatement(query);
             pst.executeUpdate();
-//            alterId();
+            alterId();
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             model.setRowCount(0);
             loadData();
@@ -703,21 +713,23 @@ public class Home extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
-//do poprawek
+    
     private void update() {
         String name = txt_1.getText();
         int age = Integer.parseInt(txt_2.getText());
         int cage_nr = Integer.parseInt(txt_3.getText());
-        String required_cage_size = txt_4.getText();
+        String cage_size = txt_4.getText();
         try {
             Class.forName(connector);
             try (Connection con = DriverManager.getConnection(url, user, password)) {
-                String sql = "update animals set name = ?, age = ?, cage_nr = ?, required_cage_size = ? where id =" + q;
-                try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+                int row = jTable1.getSelectedRow();
+                String value = (jTable1.getModel().getValueAt(row, 0).toString());
+                String query = "update animals set name = ?, age = ?, cage_nr = ?, cage_size = ? where id =" + value;
+                try (PreparedStatement pstmt = con.prepareStatement(query)) {
                     pstmt.setString(1, name);
                     pstmt.setInt(2, age);
                     pstmt.setInt(3, cage_nr);
-                    pstmt.setString(4, required_cage_size);
+                    pstmt.setString(4, cage_size);
 
                     int i = pstmt.executeUpdate();
 
@@ -761,6 +773,20 @@ public class Home extends javax.swing.JFrame {
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
     }
+    
+//    private void save_or_update(){
+//        try{
+//            Class.forName(connector);
+//            Connection con = DriverManager.getConnection(url, user, password);
+//            ResultSet rs = con.prepareStatement("select insert_or_update_animals(?)").executeQuery();
+//        }
+//        
+//        catch(ClassNotFoundException | SQLException ex){
+//        Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//    
+//    }
     
     
 
@@ -808,6 +834,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton btn_looking;
     private javax.swing.JButton btn_rmv;
     private javax.swing.JButton btn_rst;
+    private javax.swing.JButton btn_rst2;
     private javax.swing.JButton btn_update;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;

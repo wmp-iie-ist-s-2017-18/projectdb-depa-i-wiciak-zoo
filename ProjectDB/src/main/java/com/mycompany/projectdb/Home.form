@@ -23,10 +23,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
+          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -60,6 +57,8 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txt_find" min="-2" pref="200" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btn_rst2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="btn_hide" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="btn_looking" min="-2" max="-2" attributes="0"/>
@@ -68,7 +67,7 @@
                       </Group>
                       <Component id="lblStatus" alignment="0" min="-2" pref="610" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="0" pref="41" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -84,6 +83,7 @@
                       <Component id="txt_find" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_looking" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_hide" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_rst2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
@@ -509,7 +509,7 @@
                         <Column editable="false" title="species_name" type="java.lang.String"/>
                         <Column editable="false" title="age" type="java.lang.Integer"/>
                         <Column editable="false" title="cage_number" type="java.lang.Integer"/>
-                        <Column editable="false" title="required_cage_size" type="java.lang.String"/>
+                        <Column editable="false" title="cage_size" type="java.lang.String"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -616,6 +616,14 @@
           </Properties>
           <Events>
             <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_hideMousePressed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btn_rst2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Clear"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_rst2MousePressed"/>
           </Events>
         </Component>
       </SubComponents>
