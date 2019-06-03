@@ -1,0 +1,69 @@
+create sequence id_seq increment by 1 minvalue 1 maxvalue 300;
+create sequence id_eseq increment by 1 minvalue 1 maxvalue 100;
+create sequence nr_cage_s increment by 1 minvalue 1 maxvalue 100 cycle;
+create sequence nr_cage_m increment by 1 minvalue 101 maxvalue 200 cycle;
+create sequence nr_cage_l increment by 1 minvalue 201 maxvalue 300 cycle;
+
+create table species(
+id_species int not null primary key,
+species_name varchar not null unique,
+avg_length_life int not null
+);
+
+insert into species values(1, 'lion', 12);
+insert into species values(2, 'elephant', 60);
+insert into species values(3, 'giraffe', 25);
+insert into species values(4, 'penguin', 14);
+insert into species values(5, 'zebra', 30);
+
+
+create table cages(
+cage_nr int not null primary key,
+cage_size varchar not null,
+);
+
+create table employees(
+id_employee int not null primary key,
+first_name varchar not null,
+last_name varchar not null
+);
+
+insert into employees values(1, 'William', 'Smith');
+insert into employees values(nextval('id_eseq'), 'Adam', 'Walker');
+insert into employees values(nextval('id_eseq'), 'Sam', 'Johnson');
+insert into employees values(nextval('id_eseq'), 'Amanda', 'Tucson');
+insert into employees values(nextval('id_eseq'), 'Charlotte', 'Umbrella');
+insert into employees values(nextval('id_eseq'), 'Miriam', 'Ruby');
+insert into employees values(nextval('id_eseq'), 'Bradley', 'Adams');
+insert into employees values(nextval('id_eseq'), 'Alice', 'Brooks');
+
+create table employees_cages(
+id_employee int not null references employees(id_employee) on update cascade on delete cascade,
+cage_nr int not null references cages(cage_nr) on update cascade on delete cascade
+);
+
+create table animals(
+id int not null primary key,
+name varchar not null,	
+id_species int not null references species(id_species) on update cascade on delete cascade,
+age int,
+cage_nr int not null references cages(cage_nr) on update cascade on delete cascade
+);
+
+insert into animals values(1,'Alex', 1, 10, 101);
+insert into animals values(nextval('id_seq'), 'Burt', 2, 40, 201);
+insert into animals values(nextval('id_seq'), 'Melman', 3, 20, nextval('nr_cage_l'));
+insert into animals values(nextval('id_seq'), 'Skipper', 4 , 11, 1);
+insert into animals values(nextval('id_seq'), 'Marty', 5, 13, nextval('nr_cage_m'));
+insert into animals values(nextval('id_seq'), 'Simba', 1, 12, nextval('nr_cage_m'));
+insert into animals values(nextval('id_seq'), 'Dumbo', 2, 61, nextval('nr_cage_l'));
+insert into animals values(nextval('id_seq'), 'Kowalski', 4, 10, nextval('nr_cage_s'));
+insert into animals values(nextval('id_seq'), 'Rico', 4, 13, nextval('nr_cage_s'));
+insert into animals values(nextval('id_seq'), 'Julien', 6, 9, nextval('nr_cage_s'));
+insert into animals values(nextval('id_seq'), 'Private', 4, 7, nextval('nr_cage_s'));
+insert into animals values(nextval('id_seq'), 'Maurice', 6, 11, nextval('nr_cage_s'));
+insert into animals values(nextval('id_seq'), 'Mort', 6, 6, nextval('nr_cage_s'));
+insert into animals values(nextval('id_seq'), 'Timon', 7, 8, nextval('nr_cage_s'));
+insert into animals values(nextval('id_seq'), 'King', 2, 50, nextval('nr_cage_l'));
+
+

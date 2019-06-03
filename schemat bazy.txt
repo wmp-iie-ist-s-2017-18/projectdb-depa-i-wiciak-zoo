@@ -1,0 +1,14 @@
+  employees	 employees_cages     cages           animals           species
+ ____________     ____________      __________      ___________     ________________
+|id_employee |   |id_employee |    |cage_nr   |    |id         |   |id_species      |
+|first_name  |   |cage_nr     |    |cage_size |    |name       |   |species_name    |
+|last_name   |   |____________|    |__________|    |id_species |   |avg_length_life |
+|____________|                                     |age        |   |________________|
+                                                   |cage_nr    |
+                                                   |___________|
+
+id_seq -> id
+id_eseq -> id_employee
+
+
+

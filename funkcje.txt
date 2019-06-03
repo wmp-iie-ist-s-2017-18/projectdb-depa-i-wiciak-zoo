@@ -1,0 +1,56 @@
+// funkcja licz¹ca iloœæ zwierz¹t, domyœlnie wszystkie, z wpisanym gatunkiem(varchar) liczba zwierz¹t danego gatunku
+
+CREATE OR REPLACE FUNCTION count_animals(s_name IN VARCHAR DEFAULT null)
+RETURNS NUMERIC AS $$
+DECLARE count_id NUMERIC;
+BEGIN
+	IF s_name is null THEN
+		SELECT count(*) INTO count_id FROM animals;
+	ELSE
+		SELECT count(id) INTO count_id FROM animals INNER JOIN species using (id_species) WHERE species_name = s_name;
+	END IF;
+	RETURN count_id;
+END;
+$$ LANGUAGE plpgsql;
+
+//funkcja zamieniaj¹ca wpisan¹ nazwê gatunku na jego id gatunku
+
+CREATE OR REPLACE FUNCTION species_name_to_id(s_name IN VARCHAR)
+RETURNS NUMERIC AS $$
+DECLARE s_id NUMERIC;
+BEGIN
+	IF s_name is not null THEN
+		SELECT id_species INTO s_id FROM species WHERE species_name = s_name;
+	END IF;
+	RETURN s_id;
+END;
+$$ LANGUAGE plpgsql;
+
+//funkcja przypisuj¹ca numer klatki po wybraniu rozmiaru klatki S, M lub L z comboboxa
+
+CREATE OR REPLACE FUNCTION allocate_animal(chosen_cage IN VARCHAR)
+RETURNS NUMERIC AS $$
+DECLARE
+cage NUMERIC;
+BEGIN
+	IF chosen_cage = 'S' THEN
+		SELECT nextval('nr_cage_s') INTO cage;
+	ELSIF chosen_cage = 'M' THEN
+		SELECT nextval('nr_cage_m') INTO cage;
+	ELSIF chosen_cage = 'L' THEN
+		SELECT nextval('nr_cage_l') INTO cage;		
+	END IF;
+	RETURN cage;
+END;
+$$ LANGUAGE plpgsql;
+
+// liczenie iloœci zwierz¹t o tej samej nazwie
+
+CREATE OR REPLACE FUNCTION check_duplicate(animal_name IN VARCHAR)
+RETURNS NUMERIC AS $$
+DECLARE count_id NUMERIC;
+BEGIN
+		SELECT count(id) INTO count_id FROM animals WHERE name = animal_name;
+	RETURN count_id;
+END;
+$$ LANGUAGE plpgsql;
