@@ -13,6 +13,8 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
+import static javax.swing.JOptionPane.QUESTION_MESSAGE;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import net.proteanit.sql.DbUtils;
@@ -35,14 +37,7 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         centerFrame();
         jPanel_edit.setVisible(false);
-        lbl_find.setVisible(false);
-        txt_find.setVisible(false);
-        btn_hide.setVisible(false);
-        btn_looking.setVisible(false);
-        jPanel3.setVisible(false);
-        jButton1.setVisible(false);
-        btn_rst2.setVisible(false);
-        jComboBox1.setVisible(false);
+        up.setVisible(false);
     }
 
     /**
@@ -57,19 +52,23 @@ public class Home extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel_edit = new javax.swing.JPanel();
-        lbl_1 = new javax.swing.JLabel();
-        txt_1 = new javax.swing.JTextField();
-        lbl_2 = new javax.swing.JLabel();
-        txt_2 = new javax.swing.JTextField();
-        lbll_3 = new javax.swing.JLabel();
-        txt_3 = new javax.swing.JTextField();
-        lbl_4 = new javax.swing.JLabel();
-        txt_4 = new javax.swing.JTextField();
+        lbl_species = new javax.swing.JLabel();
+        lbl_name = new javax.swing.JLabel();
+        txt_name = new javax.swing.JTextField();
+        lbll_age = new javax.swing.JLabel();
+        txt_age = new javax.swing.JTextField();
+        lbl_cage = new javax.swing.JLabel();
         btn_add = new javax.swing.JButton();
         btn_rmv = new javax.swing.JButton();
         btn_rst = new javax.swing.JButton();
         btn_update = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        up = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        species_box = new javax.swing.JComboBox<>();
+        cage_box = new javax.swing.JComboBox<>();
+        btn_count = new javax.swing.JButton();
+        btn_battle = new javax.swing.JButton();
+        btn_empl = new javax.swing.JButton();
         btn_list = new javax.swing.JPanel();
         lbl_list = new javax.swing.JLabel();
         btn_discover = new javax.swing.JPanel();
@@ -80,10 +79,8 @@ public class Home extends javax.swing.JFrame {
         lblStatus = new javax.swing.JLabel();
         lbl_find = new javax.swing.JLabel();
         txt_find = new javax.swing.JTextField();
-        btn_looking = new javax.swing.JButton();
-        btn_hide = new javax.swing.JButton();
         btn_rst2 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        search_box = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,40 +101,47 @@ public class Home extends javax.swing.JFrame {
 
         jPanel_edit.setBackground(new java.awt.Color(76, 41, 211));
 
-        lbl_1.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        lbl_1.setForeground(new java.awt.Color(204, 204, 204));
-        lbl_1.setText("Name");
+        lbl_species.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        lbl_species.setForeground(new java.awt.Color(204, 204, 204));
+        lbl_species.setText("Species");
 
-        txt_1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txt_1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        txt_1.setPreferredSize(new java.awt.Dimension(4, 20));
+        lbl_name.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        lbl_name.setForeground(new java.awt.Color(204, 204, 204));
+        lbl_name.setText("Name");
 
-        lbl_2.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        lbl_2.setForeground(new java.awt.Color(204, 204, 204));
-        lbl_2.setText("Age");
+        txt_name.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_name.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_name.setPreferredSize(new java.awt.Dimension(4, 20));
 
-        txt_2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txt_2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        txt_2.setPreferredSize(new java.awt.Dimension(4, 20));
+        lbll_age.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        lbll_age.setForeground(new java.awt.Color(204, 204, 204));
+        lbll_age.setText("Age");
 
-        lbll_3.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        lbll_3.setForeground(new java.awt.Color(204, 204, 204));
-        lbll_3.setText("Cage number");
+        txt_age.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txt_age.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txt_age.setPreferredSize(new java.awt.Dimension(4, 20));
+        txt_age.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_ageKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_ageKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_ageKeyTyped(evt);
+            }
+        });
 
-        txt_3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txt_3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        txt_3.setPreferredSize(new java.awt.Dimension(4, 20));
-
-        lbl_4.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        lbl_4.setForeground(new java.awt.Color(204, 204, 204));
-        lbl_4.setText("Required cage size");
-
-        txt_4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        txt_4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        txt_4.setPreferredSize(new java.awt.Dimension(4, 20));
+        lbl_cage.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        lbl_cage.setForeground(new java.awt.Color(204, 204, 204));
+        lbl_cage.setText("Cage size");
 
         btn_add.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         btn_add.setText("Add");
+        btn_add.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.cyan, java.awt.Color.cyan, java.awt.Color.cyan, java.awt.Color.cyan));
+        btn_add.setMaximumSize(new java.awt.Dimension(83, 26));
+        btn_add.setMinimumSize(new java.awt.Dimension(29, 26));
+        btn_add.setPreferredSize(new java.awt.Dimension(83, 26));
         btn_add.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_addMousePressed(evt);
@@ -150,7 +154,11 @@ public class Home extends javax.swing.JFrame {
         });
 
         btn_rmv.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        btn_rmv.setText("Kill");
+        btn_rmv.setText("Remove");
+        btn_rmv.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.cyan, java.awt.Color.cyan, java.awt.Color.cyan, java.awt.Color.cyan));
+        btn_rmv.setMaximumSize(new java.awt.Dimension(83, 26));
+        btn_rmv.setMinimumSize(new java.awt.Dimension(53, 26));
+        btn_rmv.setPreferredSize(new java.awt.Dimension(83, 26));
         btn_rmv.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_rmvMousePressed(evt);
@@ -164,6 +172,10 @@ public class Home extends javax.swing.JFrame {
 
         btn_rst.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         btn_rst.setText("Clear");
+        btn_rst.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.cyan, java.awt.Color.cyan, java.awt.Color.cyan, java.awt.Color.cyan));
+        btn_rst.setMaximumSize(new java.awt.Dimension(83, 26));
+        btn_rst.setMinimumSize(new java.awt.Dimension(36, 26));
+        btn_rst.setPreferredSize(new java.awt.Dimension(83, 26));
         btn_rst.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_rstMousePressed(evt);
@@ -177,16 +189,78 @@ public class Home extends javax.swing.JFrame {
 
         btn_update.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         btn_update.setText("Update");
+        btn_update.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.cyan, java.awt.Color.cyan, java.awt.Color.cyan, java.awt.Color.cyan));
+        btn_update.setMaximumSize(new java.awt.Dimension(83, 26));
+        btn_update.setMinimumSize(new java.awt.Dimension(47, 26));
+        btn_update.setPreferredSize(new java.awt.Dimension(83, 26));
         btn_update.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btn_updateMousePressed(evt);
             }
         });
 
-        jButton1.setText("^");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        up.setText("^");
+        up.setBorder(null);
+        up.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jButton1MousePressed(evt);
+                upMousePressed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        jButton2.setText("Check age");
+        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.orange, java.awt.Color.orange, java.awt.Color.orange, java.awt.Color.orange));
+        jButton2.setMaximumSize(new java.awt.Dimension(110, 26));
+        jButton2.setMinimumSize(new java.awt.Dimension(63, 26));
+        jButton2.setPreferredSize(new java.awt.Dimension(110, 26));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        species_box.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        species_box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "all animals", "lion", "elephant", "giraffe", "penguin", "zebra", "lemur", "meercat" }));
+        species_box.setSelectedIndex(1);
+
+        cage_box.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        cage_box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "S", "M", "L" }));
+        cage_box.setSelectedIndex(1);
+        cage_box.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        btn_count.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
+        btn_count.setText("Count animals");
+        btn_count.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.orange, java.awt.Color.orange, java.awt.Color.orange, java.awt.Color.orange));
+        btn_count.setMaximumSize(new java.awt.Dimension(83, 26));
+        btn_count.setMinimumSize(new java.awt.Dimension(83, 26));
+        btn_count.setPreferredSize(new java.awt.Dimension(83, 26));
+        btn_count.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_countActionPerformed(evt);
+            }
+        });
+
+        btn_battle.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        btn_battle.setText("Battle");
+        btn_battle.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.orange, java.awt.Color.orange, java.awt.Color.orange, java.awt.Color.orange));
+        btn_battle.setMaximumSize(new java.awt.Dimension(36, 26));
+        btn_battle.setMinimumSize(new java.awt.Dimension(36, 26));
+        btn_battle.setPreferredSize(new java.awt.Dimension(36, 26));
+        btn_battle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_battleActionPerformed(evt);
+            }
+        });
+
+        btn_empl.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        btn_empl.setText("Employees");
+        btn_empl.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.orange, java.awt.Color.orange, java.awt.Color.orange, java.awt.Color.orange));
+        btn_empl.setMaximumSize(new java.awt.Dimension(68, 26));
+        btn_empl.setMinimumSize(new java.awt.Dimension(68, 26));
+        btn_empl.setPreferredSize(new java.awt.Dimension(68, 26));
+        btn_empl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_emplActionPerformed(evt);
             }
         });
 
@@ -195,72 +269,91 @@ public class Home extends javax.swing.JFrame {
         jPanel_editLayout.setHorizontalGroup(
             jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_editLayout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addGroup(jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_editLayout.createSequentialGroup()
-                            .addComponent(lbl_4)
-                            .addGap(86, 86, 86))
-                        .addGroup(jPanel_editLayout.createSequentialGroup()
-                            .addGap(41, 41, 41)
-                            .addComponent(lbl_1)
-                            .addContainerGap())
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_editLayout.createSequentialGroup()
-                            .addGroup(jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btn_rmv, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn_add, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn_rst, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn_update, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addGap(110, 110, 110)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_editLayout.createSequentialGroup()
-                        .addComponent(lbl_2)
-                        .addGap(129, 129, 129))))
+                .addGap(104, 104, 104)
+                .addGroup(jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbl_species, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_editLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(lbl_name)))
+                .addGap(97, 97, 97))
             .addGroup(jPanel_editLayout.createSequentialGroup()
                 .addGroup(jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_editLayout.createSequentialGroup()
-                        .addGap(58, 58, 58)
+                        .addGroup(jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btn_rmv, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel_editLayout.createSequentialGroup()
+                                .addComponent(up, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)
+                                .addComponent(btn_update, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_battle, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_editLayout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addGroup(jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel_editLayout.createSequentialGroup()
+                                .addComponent(btn_rst, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_age, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel_editLayout.createSequentialGroup()
+                                .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btn_empl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btn_count, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(jPanel_editLayout.createSequentialGroup()
+                        .addGap(113, 113, 113)
                         .addGroup(jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel_editLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(cage_box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbl_cage)))
                     .addGroup(jPanel_editLayout.createSequentialGroup()
-                        .addGap(107, 107, 107)
-                        .addComponent(lbll_3))
+                        .addGap(93, 93, 93)
+                        .addComponent(species_box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel_editLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1)))
+                        .addGap(120, 120, 120)
+                        .addComponent(lbll_age)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel_editLayout.setVerticalGroup(
             jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_editLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(lbl_1)
+                .addComponent(lbl_species)
+                .addGap(12, 12, 12)
+                .addComponent(species_box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(lbl_name)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbl_2)
+                .addComponent(lbll_age)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_age, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbll_3)
+                .addComponent(lbl_cage)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbl_4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_rst)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_add)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_rmv)
+                .addComponent(cage_box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14)
+                .addGroup(jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_rst, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_update)
-                    .addComponent(jButton1)))
+                    .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_count, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_rmv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_empl, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel_editLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(up, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_update, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_battle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(7, 7, 7))
         );
 
         btn_list.setBackground(new java.awt.Color(76, 41, 211));
@@ -289,8 +382,8 @@ public class Home extends javax.swing.JFrame {
         lbl_discover.setBackground(new java.awt.Color(222, 222, 222));
         lbl_discover.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         lbl_discover.setForeground(new java.awt.Color(204, 204, 204));
-        lbl_discover.setText("Edit an animal");
-        btn_discover.add(lbl_discover, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 161, -1));
+        lbl_discover.setText("Edit data");
+        btn_discover.add(lbl_discover, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 80, -1));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -308,7 +401,8 @@ public class Home extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(btn_discover, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel_edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel_edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -367,17 +461,16 @@ public class Home extends javax.swing.JFrame {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
         );
 
         lblStatus.setBackground(new java.awt.Color(204, 204, 204));
         lblStatus.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         lblStatus.setForeground(new java.awt.Color(204, 204, 204));
         lblStatus.setText("Status:");
+        lblStatus.setToolTipText("");
 
-        lbl_find.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        lbl_find.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
         lbl_find.setForeground(new java.awt.Color(0, 0, 0));
         lbl_find.setText("Find an animal by its");
 
@@ -387,27 +480,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        btn_looking.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        btn_looking.setText("Looking for some animal?");
-        btn_looking.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_lookingMousePressed(evt);
-            }
-        });
-        btn_looking.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_lookingActionPerformed(evt);
-            }
-        });
-
-        btn_hide.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        btn_hide.setText("Hide");
-        btn_hide.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_hideMousePressed(evt);
-            }
-        });
-
+        btn_rst2.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
         btn_rst2.setText("Clear");
         btn_rst2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -415,7 +488,8 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "species_name", "name", "cage_size" }));
+        search_box.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
+        search_box.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "species_name", "name", "cage_size", "id_employee" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -425,52 +499,46 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(lbl_find)
-                            .addGap(6, 6, 6)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txt_find, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(12, 12, 12)
-                            .addComponent(btn_rst2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btn_hide)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_looking)
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(lbl_find)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(search_box, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_find, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_rst2)))
+                .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(lblStatus)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_find)
+                    .addComponent(search_box, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_find, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_looking)
-                    .addComponent(btn_hide)
-                    .addComponent(btn_rst2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_rst2))
+                .addGap(27, 27, 27))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1034, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -478,7 +546,7 @@ public class Home extends javax.swing.JFrame {
 
     private void btn_addMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_addMousePressed
         // TODO add your handling code here:
-        if (txt_1.getText().isEmpty() || txt_2.getText().isEmpty() || txt_3.getText().isEmpty() || txt_4.getText().isEmpty()) {
+        if (txt_name.getText().isEmpty() || txt_age.getText().isEmpty()) {
             lblStatus.setForeground(Color.red);
             lblStatus.setText("Enter all details!");
         } else {
@@ -493,6 +561,7 @@ public class Home extends javax.swing.JFrame {
     private void btn_rmvMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_rmvMousePressed
         // TODO add your handling code here:
         remove();
+        alterId();
     }//GEN-LAST:event_btn_rmvMousePressed
 
     private void btn_rmvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rmvActionPerformed
@@ -508,8 +577,6 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         setColor(btn_list);
         resetColor(btn_discover);
-        jPanel3.setVisible(true);
-        btn_looking.setVisible(true);
         loadData();
     }//GEN-LAST:event_btn_listMousePressed
 
@@ -518,26 +585,8 @@ public class Home extends javax.swing.JFrame {
         setColor(btn_discover);
         resetColor(btn_list);
         jPanel_edit.setVisible(true);
-        jButton1.setVisible(true);
+        up.setVisible(true);
     }//GEN-LAST:event_btn_discoverMousePressed
-
-    private void btn_lookingMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_lookingMousePressed
-        // TODO add your handling code here:
-        lbl_find.setVisible(true);
-        jComboBox1.setVisible(true);
-        txt_find.setVisible(true);
-        btn_rst2.setVisible(true);
-        btn_hide.setVisible(true);
-    }//GEN-LAST:event_btn_lookingMousePressed
-
-    private void btn_hideMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_hideMousePressed
-        // TODO add your handling code here:
-        lbl_find.setVisible(false);
-        jComboBox1.setVisible(false);
-        txt_find.setVisible(false);
-        btn_rst2.setVisible(false);
-        btn_hide.setVisible(false);
-    }//GEN-LAST:event_btn_hideMousePressed
 
     private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
         // TODO add your handling code here:
@@ -552,18 +601,15 @@ public class Home extends javax.swing.JFrame {
         clearFields();
     }//GEN-LAST:event_btn_rstActionPerformed
 
-    private void btn_lookingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lookingActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_lookingActionPerformed
-
+    //dostosować do programu
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         int i = jTable1.getSelectedRow();
         TableModel model = jTable1.getModel();
-        txt_1.setText(model.getValueAt(i, 1).toString());
-        txt_2.setText(model.getValueAt(i, 3).toString());
-        txt_3.setText(model.getValueAt(i, 4).toString());
-//        txt_4.setText(model.getValueAt(i, 5).toString());
+        txt_name.setText(model.getValueAt(i, 1).toString());
+        txt_age.setText(model.getValueAt(i, 2).toString());
+        species_box.setSelectedItem(model.getValueAt(i, 3).toString());
+        cage_box.setSelectedItem(model.getValueAt(i, 4).toString());
 
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -572,38 +618,51 @@ public class Home extends javax.swing.JFrame {
         update();
     }//GEN-LAST:event_btn_updateMousePressed
 
-    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
+    private void upMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_upMousePressed
         // TODO add your handling code here:
         jPanel_edit.setVisible(false);
-        jButton1.setVisible(false);
-    }//GEN-LAST:event_jButton1MousePressed
+        up.setVisible(false);
+    }//GEN-LAST:event_upMousePressed
 
     private void txt_findKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_findKeyReleased
         // TODO add your handling code here:
-                        try {
+        try {
             Class.forName(connector);
             Connection con = DriverManager.getConnection(url, user, password);
-            String selection = (String)jComboBox1.getSelectedItem();
+            String selection = (String) search_box.getSelectedItem();
             String find = txt_find.getText();
-            String query = "SELECT  id, name, age, species_name, cage_size\n" +
-"FROM   animals a  \n" +
-"       LEFT OUTER JOIN species s on a.id_species = s.id_species\n" +
-"       INNER JOIN cages c on c.cage_nr = a.cage_nr\n" +
-"       WHERE lower("+selection+") like lower('" + find + "%')" +
-"ORDER BY 1";
-            PreparedStatement pst = con.prepareStatement(query); 
-            ResultSet rs = pst.executeQuery();
-                        
-                        jTable1.setModel(DbUtils.resultSetToTableModel(rs));
-                        if(txt_find.getText().isEmpty()){loadData();}
-            
+            if (search_box.getSelectedIndex() != 3) {
+                String query = "SELECT  id, name, age, species_name, cage_size\n"
+                        + "FROM   animals a  \n"
+                        + "       LEFT OUTER JOIN species s on a.id_species = s.id_species\n"
+                        + "       INNER JOIN cages c on c.cage_nr = a.cage_nr\n"
+                        + "       WHERE lower(" + selection + ") like lower('" + find + "%')"
+                        + "ORDER BY 1";
+                PreparedStatement pst = con.prepareStatement(query);
+                ResultSet rs = pst.executeQuery();
+                jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+            } else {
+                if (!txt_find.getText().isEmpty()) {
+                    String query2 = "SELECT  id, name, age, species_name, cage_size\n"
+                            + "FROM   animals a\n"
+                            + "LEFT OUTER JOIN species s on a.id_species = s.id_species\n"
+                            + "INNER JOIN cages c on c.cage_nr = a.cage_nr\n"
+                            + "INNER JOIN employees_cages on employees_cages.cage_nr = a.cage_nr\n"
+                            + "WHERE employees_cages.id_employee = " + find;
+                    PreparedStatement pst = con.prepareStatement(query2);
+                    ResultSet rs = pst.executeQuery();
+                    jTable1.setModel(DbUtils.resultSetToTableModel(rs));
+                }
+            }
+
+            if (txt_find.getText().isEmpty()) {
+                loadData();
+            }
+
 //            while(rs.next()){
 //            
 //            }
-                    
-        
-        }
-        catch(SQLException | ClassNotFoundException ex){
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_txt_findKeyReleased
@@ -613,17 +672,93 @@ public class Home extends javax.swing.JFrame {
         txt_find.setText("");
     }//GEN-LAST:event_btn_rst2MousePressed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        check_age();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    /*CREATE OR REPLACE FUNCTION count_animals(a_species_name IN VARCHAR DEFAULT null)
+RETURNS NUMERIC AS $$
+DECLARE count_id NUMERIC;
+BEGIN
+	IF a_species_name is null THEN
+		SELECT count(*) INTO count_id FROM animals;
+	ELSE
+		SELECT count(id) INTO count_id FROM animals INNER JOIN species using (id_species)
+    WHERE species_name = a_species_name;
+	END IF;
+	RETURN count_id;
+END;
+$$ LANGUAGE plpgsql;*/
+
+    private void btn_countActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_countActionPerformed
+        // TODO add your handling code here:
+        try {
+            Class.forName(connector);
+            Connection con = DriverManager.getConnection(url, user, password);
+            String selection = (String) species_box.getSelectedItem();
+            Statement st = con.createStatement();
+            ResultSet rs;
+            int result = 0;
+            if (species_box.getSelectedIndex() == 0) {
+                rs = st.executeQuery("select count_animals()");
+                while (rs.next()) {
+                    result = rs.getInt("count_animals");
+                }
+                JOptionPane.showMessageDialog(null, "There are(is) " + result + " animal(s) in the zoo");
+            } else {
+                rs = st.executeQuery("select count_animals('" + selection + "')");
+                while (rs.next()) {
+                    result = rs.getInt("count_animals");
+                }
+                JOptionPane.showMessageDialog(null, "There are(is) " + result + " " + selection + "(s) in the zoo");
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_countActionPerformed
+
+    private void btn_battleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_battleActionPerformed
+        // TODO add your handling code here:
+        new Battlefield().setVisible(true);
+    }//GEN-LAST:event_btn_battleActionPerformed
+
+    private void btn_emplActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_emplActionPerformed
+        // TODO add your handling code here:
+        new Employees().setVisible(true);
+    }//GEN-LAST:event_btn_emplActionPerformed
+
+    private void txt_ageKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ageKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_ageKeyTyped
+
+    private void txt_ageKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ageKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_ageKeyPressed
+
+    private void txt_ageKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ageKeyReleased
+        // TODO add your handling code here:
+        try {
+            if (!txt_age.getText().isEmpty()) {
+                Integer.parseInt(txt_age.getText());
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Not a number!");
+            txt_age.setText("");
+        }
+    }//GEN-LAST:event_txt_ageKeyReleased
+
     private void loadData() {
         try {
             Class.forName(connector);
             Connection con = DriverManager.getConnection(url, user, password);
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(
-"SELECT  id, name, age, species_name, cage_size\n" +
-"FROM   animals a  \n" +
-"       LEFT OUTER JOIN species s on a.id_species = s.id_species\n" +
-"       INNER JOIN cages c on c.cage_nr = a.cage_nr\n" +
-"ORDER BY 1;");
+                    "SELECT  id, name, age, species_name, cage_size\n"
+                    + "FROM   animals a  \n"
+                    + "       LEFT OUTER JOIN species s on a.id_species = s.id_species\n"
+                    + "       INNER JOIN cages c on c.cage_nr = a.cage_nr\n"
+                    + "ORDER BY 1;");
             {
 
                 while (jTable1.getRowCount() > 0) {
@@ -649,41 +784,124 @@ public class Home extends javax.swing.JFrame {
         }
     }
 
+    /*CREATE OR REPLACE FUNCTION species_name_to_id(a_species_name IN VARCHAR)
+RETURNS NUMERIC AS $$
+DECLARE s_id NUMERIC;
+BEGIN
+	IF a_species_name is not null THEN
+		SELECT id_species INTO s_id FROM animals INNER JOIN species using(id_species)
+                WHERE species_name = a_species_name;
+	END IF;
+	RETURN s_id;
+END;
+$$ LANGUAGE plpgsql;*/
+    
+ /*
+CREATE OR REPLACE FUNCTION check_duplicate(animal_name IN VARCHAR)
+RETURNS NUMERIC AS $$
+DECLARE count_id NUMERIC;
+BEGIN
+		SELECT count(id) INTO count_id FROM animals WHERE name = animal_name;
+	RETURN count_id;
+END;
+$$ LANGUAGE plpgsql;    
+     */
+    
     private void saveData() {
-        String name = txt_1.getText();
-        int age = Integer.parseInt(txt_2.getText());
-        int cage_nr = Integer.parseInt(txt_3.getText());
+        String species_name = (String) species_box.getSelectedItem();
+        int id_species = 100;
+        String name = txt_name.getText();
+        int age = Integer.parseInt(txt_age.getText());
+        String cage = (String) cage_box.getSelectedItem();
+        int cage_nr, check = 2;
 
         try {
             Class.forName(connector);
-            try (
-                    Connection con = DriverManager.getConnection(url, user, password);
-                    PreparedStatement pstmt = con.prepareStatement("insert into animals values(nextval('id_seq'),?,?,?,?)")) {
-                pstmt.setString(1, name);
-                pstmt.setInt(2, 1);
-                pstmt.setInt(3, age);
-                pstmt.setInt(4, cage_nr);
-
-                int i = pstmt.executeUpdate();
-
-                if (i > 0) {
-                    JOptionPane.showMessageDialog(null, "Animal added");
-                    lblStatus.setForeground(new Color(0, 179, 0));
-                    lblStatus.setText("One animal more on this planet!");
-                    loadData();
-                    clearFields();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Animal saving failed");
+            Connection con = DriverManager.getConnection(url, user, password);
+            PreparedStatement pstmt = con.prepareStatement("insert into animals values(nextval('id_seq'),?,?,?,?)");
+            if (species_box.getSelectedIndex() != 0) {
+                ResultSet rs = con.prepareStatement("SELECT check_duplicate('" + name + "')").executeQuery();
+                while (rs.next()) {
+                    check = rs.getInt("check_duplicate");
                 }
-                pstmt.close();
-                con.close();
+                if (check == 0) {
+                    rs = con.prepareStatement("SELECT species_name_to_id('" + species_name + "')").executeQuery();
+                    while (rs.next()) {
+                        id_species = rs.getInt("species_name_to_id");
+                    }
+                    rs = con.prepareStatement("select count(id) from animals inner join cages using(cage_nr) where cage_size = '" + cage + "'").executeQuery();
+                    while (rs.next()) {
+                        cage_nr = rs.getInt("count");
+                        if (cage_nr > 0) {
+                            rs = con.prepareStatement("select allocate_animal('" + cage + "')").executeQuery();
+                            while (rs.next()) {
+                                cage_nr = rs.getInt("allocate_animal");
+                                pstmt.setString(1, name);
+                                pstmt.setInt(2, id_species);
+                                pstmt.setInt(3, age);
+                                pstmt.setInt(4, cage_nr);
+                                int i = pstmt.executeUpdate();
+                                if (i > 0) {
+                                    JOptionPane.showMessageDialog(null, "Animal added!");
+                                    lblStatus.setForeground(new Color(0, 179, 0));
+                                    lblStatus.setText("One animal more on this planet!");
+                                    loadData();
+                                    clearFields();
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Animal saving failed!");
+                                }
+                                pstmt.close();
+                                con.close();
+                            }
+
+                        } else if (cage_nr == 0) {
+
+                            switch (cage) {
+                                case "S":
+                                    cage_nr = 1;
+                                    break;
+                                case "M":
+                                    cage_nr = 101;
+                                    break;
+                                case "L":
+                                    cage_nr = 201;
+                                    break;
+                            }
+
+                            pstmt.setString(1, name);
+                            pstmt.setInt(2, id_species);
+                            pstmt.setInt(3, age);
+                            pstmt.setInt(4, cage_nr);
+                            int i = pstmt.executeUpdate();
+
+                            if (i > 0) {
+                                JOptionPane.showMessageDialog(null, "Animal added!");
+                                lblStatus.setForeground(new Color(0, 179, 0));
+                                lblStatus.setText("One animal more on this planet!");
+                                loadData();
+                                clearFields();
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Animal saving failed!");
+                            }
+                            pstmt.close();
+                            con.close();
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "There is already an animal named " + name + ".\nName the animal differently.");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "You need to select a specific species.\n"
+                        + "The 'all animals' option can be used only with the 'count animals' button.");
             }
+
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
- private void alterId() {
+    private void alterId() {
         try {
             Class.forName(connector);
             Connection con = DriverManager.getConnection(url, user, password);
@@ -718,62 +936,126 @@ public class Home extends javax.swing.JFrame {
             Class.forName(connector);
             Connection con = DriverManager.getConnection(url, user, password);
             int row = jTable1.getSelectedRow();
-            String value = (jTable1.getModel().getValueAt(row, 0).toString());
-            String query = "delete from animals where id = " + value;
-            PreparedStatement pst = con.prepareStatement(query);
-            pst.executeUpdate();
-            alterId();
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0);
-            loadData();
-            JOptionPane.showMessageDialog(null, "The animal killed! Do you have human dignity and understanding?!");
-            clearFields();
-        } catch (HeadlessException | ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, e);
+            if (jTable1.isRowSelected(row)) {
+                String value = (jTable1.getModel().getValueAt(row, 0).toString());
+                String query = "delete from animals where id = " + value;
+                PreparedStatement pst = con.prepareStatement(query);
+                pst.executeUpdate();
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.setRowCount(0);
+                loadData();
+                JOptionPane.showMessageDialog(null, "The animal removed!");
+                clearFields();
+            } else {
+                JOptionPane.showMessageDialog(null, "To remove an animal you must first click on the selected row in the table.");
+            }
+
+        } catch (HeadlessException | ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void update() {
-        String name = txt_1.getText();
-        int age = Integer.parseInt(txt_2.getText());
-        int cage_nr = Integer.parseInt(txt_3.getText());
+        String species_name = (String) species_box.getSelectedItem();
+        int id_species = 100;
+        String name = txt_name.getText();
+        String cage = (String) cage_box.getSelectedItem();
+        int cage_nr, check = 2;
         try {
             Class.forName(connector);
-            try (Connection con = DriverManager.getConnection(url, user, password)) {
-                int row = jTable1.getSelectedRow();
+            Connection con = DriverManager.getConnection(url, user, password);
+            int row = jTable1.getSelectedRow();
+            if (jTable1.isRowSelected(row)) {
+                int age = Integer.parseInt(txt_age.getText());
                 String value = (jTable1.getModel().getValueAt(row, 0).toString());
-                String query = "update animals set name = ?, age = ?, cage_nr = ? where id =" + value;
-                try (PreparedStatement pstmt = con.prepareStatement(query)) {
-                    pstmt.setString(1, name);
-                    pstmt.setInt(2, age);
-                    pstmt.setInt(3, cage_nr);
-
-                    int i = pstmt.executeUpdate();
-
-                    if (i > 0) {
-                        JOptionPane.showMessageDialog(null, "Animal's data updated!");
-                        lblStatus.setForeground(new Color(0, 179, 0));
-                        lblStatus.setText("Animal's data updated!");
-                        loadData();
-                        clearFields();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Animal data changing failed");
+                PreparedStatement pstmt = con.prepareStatement("update animals set name = ?, id_species = ?, age = ?, cage_nr = ? where id = " + value);
+                if (species_box.getSelectedIndex() != 0) {
+                    ResultSet rs = con.prepareStatement("SELECT check_duplicate('" + name + "')").executeQuery();
+                    while (rs.next()) {
+                        check = rs.getInt("check_duplicate");
                     }
-                    pstmt.executeUpdate();
+                    if (check == 0) {
+                        rs = con.prepareStatement("SELECT species_name_to_id('" + species_name + "')").executeQuery();
+                        while (rs.next()) {
+                            id_species = rs.getInt("species_name_to_id");
+                        }
+                        rs = con.prepareStatement("select count(id) from animals inner join cages using(cage_nr) where cage_size = '" + cage + "'").executeQuery();
+                        while (rs.next()) {
+                            cage_nr = rs.getInt("count");
+                            if (cage_nr > 0) {
+                                rs = con.prepareStatement("select allocate_animal('" + cage + "')").executeQuery();
+                                while (rs.next()) {
+                                    cage_nr = rs.getInt("allocate_animal");
+                                    pstmt.setString(1, name);
+                                    pstmt.setInt(2, id_species);
+                                    pstmt.setInt(3, age);
+                                    pstmt.setInt(4, cage_nr);
+                                    int i = pstmt.executeUpdate();
+                                    if (i > 0) {
+                                        JOptionPane.showMessageDialog(null, "Animal's data updated!");
+                                        lblStatus.setForeground(new Color(0, 179, 0));
+                                        lblStatus.setText("Data of the animal changed!");
+                                        loadData();
+                                        clearFields();
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Animal's data saving failed!");
+                                    }
+                                    pstmt.close();
+                                    con.close();
+                                }
+
+                            } else if (cage_nr == 0) {
+
+                                switch (cage) {
+                                    case "S":
+                                        cage_nr = 1;
+                                        break;
+                                    case "M":
+                                        cage_nr = 101;
+                                        break;
+                                    case "L":
+                                        cage_nr = 201;
+                                        break;
+                                }
+
+                                pstmt.setString(1, name);
+                                pstmt.setInt(2, id_species);
+                                pstmt.setInt(3, age);
+                                pstmt.setInt(4, cage_nr);
+                                int i = pstmt.executeUpdate();
+
+                                if (i > 0) {
+                                    JOptionPane.showMessageDialog(null, "Animal's data updated!");
+                                    lblStatus.setForeground(new Color(0, 179, 0));
+                                    lblStatus.setText("One animal more on this planet!");
+                                    loadData();
+                                    clearFields();
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Animal's data saving failed!");
+                                }
+                                pstmt.close();
+                                con.close();
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "There is already an animal named " + name + ".\nName the animal differently.");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "You need to select a specific species.\n"
+                            + "The 'all animals' option can be used only with the 'count animals' button.");
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "To edit an animal's data you must first click on the selected row in the table.");
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
-    
 
     private void clearFields() {
-        txt_1.setText("");
-        txt_2.setText("");
-        txt_3.setText("");
-        txt_4.setText("");
+        txt_name.setText("");
+        txt_age.setText("");
     }
 
     private void setColor(JPanel panel) {
@@ -790,8 +1072,45 @@ public class Home extends javax.swing.JFrame {
         Dimension size = toolkit.getScreenSize();
         setLocation(size.width / 2 - getWidth() / 2, size.height / 2 - getHeight() / 2);
     }
-    
-    
+
+    private void check_age() {
+        try {
+            Class.forName(connector);
+            Connection con = DriverManager.getConnection(url, user, password);
+            Statement st = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            int row = jTable1.getSelectedRow();
+            if (jTable1.isRowSelected(row)) {
+                String value = (jTable1.getModel().getValueAt(row, 0).toString());
+                ResultSet rs = st.executeQuery("select id, name, age, avg_length_life from animals a, species s\n"
+                        + "where a.id_species = s.id_species and id = " + value);
+                int age, avg_age, dif, reply;
+                if (rs.last()) {
+                    age = rs.getInt("age");
+                    avg_age = rs.getInt("avg_length_life");
+                    dif = avg_age - age;
+                    String too_old = "The animal is already quite old. It lives already " + (-dif) + " years longer than the average. "
+                            + "Do you want to remove it?";
+                    String q = "This animal in zoo is old";
+
+                    if (dif > 0) {
+                        JOptionPane.showMessageDialog(null, "The animal should live about " + dif + " years more yet");
+                    } else if (dif == 0) {
+                        JOptionPane.showMessageDialog(null, "The animal lives exactly as long as the average age for its species is, that is " + avg_age + " years");
+                    } else {
+                        reply = JOptionPane.showConfirmDialog(null, too_old, q, YES_NO_OPTION, QUESTION_MESSAGE);
+                        if (reply == JOptionPane.YES_OPTION) {
+                            remove();
+                            alterId();
+                        }
+                    }
+                }
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -820,7 +1139,11 @@ public class Home extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -831,16 +1154,17 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add;
+    private javax.swing.JButton btn_battle;
+    private javax.swing.JButton btn_count;
     private javax.swing.JPanel btn_discover;
-    private javax.swing.JButton btn_hide;
+    private javax.swing.JButton btn_empl;
     private javax.swing.JPanel btn_list;
-    private javax.swing.JButton btn_looking;
     private javax.swing.JButton btn_rmv;
     private javax.swing.JButton btn_rst;
     private javax.swing.JButton btn_rst2;
     private javax.swing.JButton btn_update;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cage_box;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -848,17 +1172,18 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblStatus;
-    private javax.swing.JLabel lbl_1;
-    private javax.swing.JLabel lbl_2;
-    private javax.swing.JLabel lbl_4;
+    private javax.swing.JLabel lbl_cage;
     private javax.swing.JLabel lbl_discover;
     private javax.swing.JLabel lbl_find;
     private javax.swing.JLabel lbl_list;
-    private javax.swing.JLabel lbll_3;
-    private javax.swing.JTextField txt_1;
-    private javax.swing.JTextField txt_2;
-    private javax.swing.JTextField txt_3;
-    private javax.swing.JTextField txt_4;
+    private javax.swing.JLabel lbl_name;
+    private javax.swing.JLabel lbl_species;
+    private javax.swing.JLabel lbll_age;
+    private javax.swing.JComboBox<String> search_box;
+    private javax.swing.JComboBox<String> species_box;
+    private javax.swing.JTextField txt_age;
     private javax.swing.JTextField txt_find;
+    private javax.swing.JTextField txt_name;
+    private javax.swing.JButton up;
     // End of variables declaration//GEN-END:variables
 }
